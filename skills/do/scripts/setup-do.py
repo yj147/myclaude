@@ -2,7 +2,7 @@
 """
 Initialize do skill workflow - wrapper around task.py.
 
-Creates a task directory under .claude/do-tasks/ with:
+Creates a task directory under .codex/do-tasks/ with:
 - task.md: Task metadata (YAML frontmatter) + requirements (Markdown body)
 
 If --worktree is specified, also creates a git worktree for isolated development.

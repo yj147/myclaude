@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Install/uninstall do skill to ~/.claude/skills/do"""
+"""Install/uninstall do skill to ~/.codex/skills/do"""
 import argparse
 import json
 import os
@@ -8,7 +8,7 @@ import sys
 from pathlib import Path
 
 SKILL_NAME = "do"
-HOOK_PATH = "~/.claude/skills/do/hooks/stop-hook.py"
+HOOK_PATH = "~/.codex/skills/do/hooks/stop-hook.py"
 
 MODELS_JSON_TEMPLATE = {
     "agents": {
@@ -28,7 +28,7 @@ MODELS_JSON_TEMPLATE = {
 }
 
 def get_settings_path() -> Path:
-    return Path.home() / ".claude" / "settings.json"
+    return Path.home() / ".codex" / "settings.json"
 
 def load_settings() -> dict:
     path = get_settings_path()
@@ -107,7 +107,7 @@ def install_models_json():
 
 def install():
     src = Path(__file__).parent.resolve()
-    dest = Path.home() / ".claude" / "skills" / SKILL_NAME
+    dest = Path.home() / ".codex" / "skills" / SKILL_NAME
 
     dest.mkdir(parents=True, exist_ok=True)
 
@@ -137,7 +137,7 @@ def install():
     print(f"✓ Hook added to settings.json")
 
 def uninstall():
-    dest = Path.home() / ".claude" / "skills" / SKILL_NAME
+    dest = Path.home() / ".codex" / "skills" / SKILL_NAME
 
     settings = load_settings()
     settings = remove_hook(settings)

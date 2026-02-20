@@ -38,7 +38,7 @@ if ! curl -fsSL "$URL" -o /tmp/codeagent-wrapper; then
     exit 1
 fi
 
-INSTALL_DIR="${INSTALL_DIR:-$HOME/.claude}"
+INSTALL_DIR="${INSTALL_DIR:-$HOME/.codex}"
 BIN_DIR="${INSTALL_DIR}/bin"
 mkdir -p "$BIN_DIR"
 

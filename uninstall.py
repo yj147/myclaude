@@ -11,7 +11,7 @@ import sys
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Set
 
-DEFAULT_INSTALL_DIR = "~/.claude"
+DEFAULT_INSTALL_DIR = "~/.codex"
 
 # Files created by installer itself (not by modules)
 INSTALLER_FILES = ["install.log", "installed_modules.json", "installed_modules.json.bak"]
@@ -22,7 +22,7 @@ def parse_args(argv: Optional[List[str]] = None) -> argparse.Namespace:
     parser.add_argument(
         "--install-dir",
         default=DEFAULT_INSTALL_DIR,
-        help="Installation directory (defaults to ~/.claude)",
+        help="Installation directory (defaults to ~/.codex)",
     )
     parser.add_argument(
         "--module",

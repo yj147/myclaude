@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "install_dir": "~/.claude",
+  "install_dir": "~/.codex",
   "log_file": "install.log",
   "modules": {
     "bmad": {
@@ -155,6 +155,12 @@
           "source": "skills/do",
           "target": "skills/do",
           "description": "Install do skill with hooks"
+        },
+        {
+          "type": "copy_file",
+          "source": "skills/codeagent/SKILL.md",
+          "target": "skills/codeagent/SKILL.md",
+          "description": "Install codeagent skill"
         }
       ]
     },

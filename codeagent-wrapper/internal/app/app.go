@@ -145,6 +145,7 @@ func readAgentPromptFile(path string, allowOutsideClaudeDir bool) (string, error
 	} else {
 		allowedDirs := []string{
 			filepath.Clean(filepath.Join(home, ".claude")),
+			filepath.Clean(filepath.Join(home, ".codex")),
 			filepath.Clean(filepath.Join(home, ".codeagent", "agents")),
 		}
 		for i := range allowedDirs {
@@ -180,7 +181,7 @@ func readAgentPromptFile(path string, allowOutsideClaudeDir bool) (string, error
 			}
 			if !withinAllowed {
 				logWarn(fmt.Sprintf("Refusing to read prompt file outside allowed dirs (%s): %s", strings.Join(allowedDirs, ", "), absPath))
-				return "", fmt.Errorf("prompt file must be under ~/.claude or ~/.codeagent/agents")
+				return "", fmt.Errorf("prompt file must be under ~/.claude, ~/.codex, or ~/.codeagent/agents")
 			}
 
 			resolvedPath, errPath := filepath.EvalSymlinks(absPath)
@@ -204,7 +205,7 @@ func readAgentPromptFile(path string, allowOutsideClaudeDir bool) (string, error
 					}
 					if !withinResolved {
 						logWarn(fmt.Sprintf("Refusing to read prompt file outside allowed dirs (%s) (resolved): %s", strings.Join(resolvedAllowed, ", "), resolvedPath))
-						return "", fmt.Errorf("prompt file must be under ~/.claude or ~/.codeagent/agents")
+						return "", fmt.Errorf("prompt file must be under ~/.claude, ~/.codex, or ~/.codeagent/agents")
 					}
 				}
 			}

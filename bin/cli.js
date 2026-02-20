@@ -19,7 +19,7 @@ const API_HEADERS = {
 function parseArgs(argv) {
   const out = {
     command: "install",
-    installDir: "~/.claude",
+    installDir: "~/.codex",
     force: false,
     dryRun: false,
     list: false,
@@ -61,12 +61,12 @@ function printHelp() {
       "  npx github:cexll/myclaude",
       "  npx github:cexll/myclaude --list",
       "  npx github:cexll/myclaude --update",
-      "  npx github:cexll/myclaude --install-dir ~/.claude --force",
+      "  npx github:cexll/myclaude --install-dir ~/.codex --force",
       "  npx github:cexll/myclaude uninstall",
       "  npx github:cexll/myclaude uninstall --module bmad,do -y",
       "",
       "Options:",
-      "  --install-dir <path>   Default: ~/.claude",
+      "  --install-dir <path>   Default: ~/.codex",
       "  --force                Overwrite existing files",
       "  --dry-run              Print actions only",
       "  --list                 List installable items and exit",
