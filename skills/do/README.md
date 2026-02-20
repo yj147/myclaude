@@ -52,7 +52,7 @@ To customize agents, create same-named files in `~/.codeagent/agents/` to overri
 3. **Phase 4 requires approval** - stop after Phase 3 if not approved
 4. **Pass complete context forward** - every agent gets the Context Pack
 5. **Parallel-first** - run independent tasks via `codeagent-wrapper --parallel`
-6. **Update state after each phase** - keep `.claude/do-tasks/{task_id}/task.json` current
+6. **Update state after each phase** - keep `.claude/do-tasks/{task_id}/task.md` frontmatter current
 
 ## Context Pack Template
 

@@ -7,7 +7,7 @@ Runs verification commands to ensure code quality before allowing exit.
 
 Mechanism:
 - Intercepts SubagentStop event for code-reviewer agent
-- Runs verify commands from task.json if configured
+- Runs verify commands from task.md frontmatter if configured
 - Blocks stopping until verification passes
 - Has max iterations as safety limit (MAX_ITERATIONS=5)
 
@@ -16,6 +16,7 @@ State file: .claude/do-tasks/.verify-state.json
 
 import json
 import os
+import re
 import subprocess
 import sys
 from datetime import datetime
@@ -26,7 +27,7 @@ MAX_ITERATIONS = 5
 STATE_TIMEOUT_MINUTES = 30
 DIR_TASKS = ".claude/do-tasks"
 FILE_CURRENT_TASK = ".current-task"
-FILE_TASK_JSON = "task.json"
+FILE_TASK_MD = "task.md"
 STATE_FILE = ".claude/do-tasks/.verify-state.json"
 
 # Only control loop for code-reviewer agent
@@ -57,19 +58,42 @@ def get_current_task(project_root: str) -> str | None:
 
 
 def get_task_info(project_root: str, task_dir: str) -> dict | None:
-    """Read task.json data."""
-    task_json_path = os.path.join(project_root, task_dir, FILE_TASK_JSON)
-    if not os.path.exists(task_json_path):
+    """Read task.md YAML frontmatter as task metadata."""
+    task_md_path = os.path.join(project_root, task_dir, FILE_TASK_MD)
+    if not os.path.exists(task_md_path):
         return None
     try:
-        with open(task_json_path, "r", encoding="utf-8") as f:
-            return json.load(f)
+        with open(task_md_path, "r", encoding="utf-8") as f:
+            content = f.read()
     except Exception:
         return None
 
+    match = re.match(r'^---\n(.*?)\n---\n', content, re.DOTALL)
+    if not match:
+        return None
+
+    frontmatter = {}
+    for line in match.group(1).split("\n"):
+        if ":" not in line:
+            continue
+        key, value = line.split(":", 1)
+        key = key.strip()
+        value = value.strip()
+        if value.startswith('"') and value.endswith('"'):
+            value = value[1:-1]
+        elif value == "true":
+            value = True
+        elif value == "false":
+            value = False
+        elif value.isdigit():
+            value = int(value)
+        frontmatter[key] = value
+
+    return frontmatter
+
 
 def get_verify_commands(task_info: dict) -> list[str]:
-    """Get verify commands from task.json."""
+    """Get verify commands from task metadata."""
     return task_info.get("verify_commands", [])
 
 
