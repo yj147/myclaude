@@ -8,12 +8,13 @@ Used by inject-context hook to build agent prompts.
 
 import json
 import os
+import re
 import sys
 from pathlib import Path
 
-DIR_TASKS = ".claude/do-tasks"
+DIR_TASKS = ".codex/do-tasks"
 FILE_CURRENT_TASK = ".current-task"
-FILE_TASK_JSON = "task.json"
+FILE_TASK_MD = "task.md"
 
 
 def get_project_root() -> str:
@@ -90,15 +91,38 @@ def get_agent_context(project_root: str, task_dir: str, agent_type: str) -> str:
 
 
 def get_task_info(project_root: str, task_dir: str) -> dict | None:
-    """Get task.json data."""
-    task_json_path = os.path.join(project_root, task_dir, FILE_TASK_JSON)
-    if not os.path.exists(task_json_path):
+    """Get task metadata from task.md YAML frontmatter."""
+    task_md_path = os.path.join(project_root, task_dir, FILE_TASK_MD)
+    if not os.path.exists(task_md_path):
         return None
     try:
-        with open(task_json_path, "r", encoding="utf-8") as f:
-            return json.load(f)
+        with open(task_md_path, "r", encoding="utf-8") as f:
+            content = f.read()
     except Exception:
         return None
+
+    match = re.match(r'^---\n(.*?)\n---\n', content, re.DOTALL)
+    if not match:
+        return None
+
+    frontmatter = {}
+    for line in match.group(1).split("\n"):
+        if ":" not in line:
+            continue
+        key, value = line.split(":", 1)
+        key = key.strip()
+        value = value.strip()
+        if value.startswith('"') and value.endswith('"'):
+            value = value[1:-1]
+        elif value == "true":
+            value = True
+        elif value == "false":
+            value = False
+        elif value.isdigit():
+            value = int(value)
+        frontmatter[key] = value
+
+    return frontmatter
 
 
 def main():

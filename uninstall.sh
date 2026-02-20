@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-INSTALL_DIR="${INSTALL_DIR:-$HOME/.claude}"
+INSTALL_DIR="${INSTALL_DIR:-$HOME/.codex}"
 BIN_DIR="${INSTALL_DIR}/bin"
 STATUS_FILE="${INSTALL_DIR}/installed_modules.json"
 DRY_RUN=false
@@ -17,7 +17,7 @@ Usage: $0 [OPTIONS]
 Uninstall myclaude modules.
 
 Options:
-  --install-dir DIR   Installation directory (default: ~/.claude)
+  --install-dir DIR   Installation directory (default: ~/.codex)
   --module MODULES    Comma-separated modules to uninstall (default: all)
   --list              List installed modules and exit
   --dry-run           Show what would be removed without removing

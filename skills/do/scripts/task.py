@@ -22,7 +22,7 @@ from datetime import datetime
 from pathlib import Path
 
 # Directory constants
-DIR_TASKS = ".claude/do-tasks"
+DIR_TASKS = ".codex/do-tasks"
 FILE_CURRENT_TASK = ".current-task"
 FILE_TASK_MD = "task.md"
 

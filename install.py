@@ -22,7 +22,7 @@ try:
 except ImportError:  # pragma: no cover
     jsonschema = None
 
-DEFAULT_INSTALL_DIR = "~/.claude"
+DEFAULT_INSTALL_DIR = "~/.codex"
 SETTINGS_FILE = "settings.json"
 WRAPPER_REQUIRED_MODULES = {"do", "omo"}
 
@@ -35,7 +35,7 @@ def _ensure_list(ctx: Dict[str, Any], key: str) -> List[Any]:
 def parse_args(argv: Optional[Iterable[str]] = None) -> argparse.Namespace:
     """Parse CLI arguments.
 
-    The default install dir must remain "~/.claude" to match docs/tests.
+    The default install dir is "~/.codex".
     """
 
     parser = argparse.ArgumentParser(
@@ -44,7 +44,7 @@ def parse_args(argv: Optional[Iterable[str]] = None) -> argparse.Namespace:
     parser.add_argument(
         "--install-dir",
         default=DEFAULT_INSTALL_DIR,
-        help="Installation directory (defaults to ~/.claude)",
+        help="Installation directory (defaults to ~/.codex)",
     )
     parser.add_argument(
         "--module",
@@ -464,7 +464,7 @@ def load_installed_status(ctx: Dict[str, Any]) -> Dict[str, Any]:
 
 
 def check_module_installed(name: str, cfg: Dict[str, Any], ctx: Dict[str, Any]) -> bool:
-    """Check if a module is installed by verifying its files exist."""
+    """Heuristic fallback: infer installation by checking expected files."""
     install_dir = ctx["install_dir"]
 
     for op in cfg.get("operations", []):
@@ -490,19 +490,36 @@ def check_module_installed(name: str, cfg: Dict[str, Any], ctx: Dict[str, Any]) 
 
 
 def get_installed_modules(config: Dict[str, Any], ctx: Dict[str, Any]) -> Dict[str, bool]:
-    """Get installation status of all modules by checking files."""
+    """Get installation status of all modules.
+
+    Prefer installed_modules.json when it is valid, because filesystem
+    heuristics can produce false positives for modules that share targets.
+    Fallback to file checks only when status file is missing/corrupted.
+    """
     result = {}
     modules = config.get("modules", {})
 
-    # First check status file
-    status = load_installed_status(ctx)
-    status_modules = status.get("modules", {})
+    status_modules: Dict[str, Any] = {}
+    use_status_only = False
+    status_path = Path(ctx["status_file"])
+    if status_path.exists():
+        try:
+            status_data = _load_json(status_path)
+            modules_data = status_data.get("modules", {})
+            if isinstance(modules_data, dict):
+                status_modules = modules_data
+                use_status_only = True
+        except (ValueError, FileNotFoundError):
+            # Fall back to filesystem heuristics when status cannot be parsed.
+            use_status_only = False
 
     for name, cfg in modules.items():
-        # Check both status file and filesystem
         in_status = name in status_modules
-        files_exist = check_module_installed(name, cfg, ctx)
-        result[name] = in_status or files_exist
+        if use_status_only:
+            result[name] = in_status
+        else:
+            files_exist = check_module_installed(name, cfg, ctx)
+            result[name] = in_status or files_exist
 
     return result
 
@@ -560,7 +577,7 @@ def interactive_select_modules(config: Dict[str, Any]) -> Dict[str, Any]:
     module_names = list(modules.keys())
 
     print("\n" + "=" * 65)
-    print("Welcome to Claude Plugin Installer")
+    print("Welcome to Codex Plugin Installer")
     print("=" * 65)
     print("\nNo modules specified. Please select modules to install:\n")
 
@@ -757,7 +774,7 @@ def interactive_manage(config: Dict[str, Any], ctx: Dict[str, Any]) -> int:
         module_names = list(modules.keys())
 
         print("\n" + "=" * 70)
-        print("Claude Plugin Manager")
+        print("Codex Plugin Manager")
         print("=" * 70)
         print(f"{'#':<3} {'Name':<15} {'Status':<15} Description")
         print("-" * 70)

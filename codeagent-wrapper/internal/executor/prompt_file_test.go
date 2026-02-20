@@ -86,6 +86,29 @@ func TestReadAgentPromptFile_RestrictedAllowsClaudeDir(t *testing.T) {
 	}
 }
 
+func TestReadAgentPromptFile_RestrictedAllowsCodexDir(t *testing.T) {
+	home := t.TempDir()
+	t.Setenv("HOME", home)
+	t.Setenv("USERPROFILE", home)
+
+	codexDir := filepath.Join(home, ".codex")
+	if err := os.MkdirAll(codexDir, 0o755); err != nil {
+		t.Fatalf("MkdirAll: %v", err)
+	}
+	path := filepath.Join(codexDir, "prompt.md")
+	if err := os.WriteFile(path, []byte("OK\n"), 0o644); err != nil {
+		t.Fatalf("WriteFile: %v", err)
+	}
+
+	got, err := ReadAgentPromptFile("~/.codex/prompt.md", false)
+	if err != nil {
+		t.Fatalf("readAgentPromptFile error: %v", err)
+	}
+	if got != "OK" {
+		t.Fatalf("got %q, want %q", got, "OK")
+	}
+}
+
 func TestReadAgentPromptFile_RestrictedAllowsCodeagentAgentsDir(t *testing.T) {
 	home := t.TempDir()
 	t.Setenv("HOME", home)

@@ -22,7 +22,7 @@ func setTestHome(t *testing.T, home string) {
 func createTempSkill(t *testing.T, name, content string) string {
 	t.Helper()
 	home := t.TempDir()
-	skillDir := filepath.Join(home, ".claude", "skills", name)
+	skillDir := filepath.Join(home, ".codex", "skills", name)
 	if err := os.MkdirAll(skillDir, 0755); err != nil {
 		t.Fatal(err)
 	}
@@ -201,6 +201,38 @@ func TestDetectProjectSkills_NonexistentDir(t *testing.T) {
 	}
 }
 
+func TestDetectProjectSkills_CodexOnlySkill(t *testing.T) {
+	home := t.TempDir()
+	setTestHome(t, home)
+
+	// Create a Node.js fingerprint file.
+	workDir := t.TempDir()
+	if err := os.WriteFile(filepath.Join(workDir, "package.json"), []byte(`{"name":"test"}`), 0644); err != nil {
+		t.Fatal(err)
+	}
+
+	// Install one of the mapped skills only under ~/.codex.
+	skillDir := filepath.Join(home, ".codex", "skills", "frontend-design")
+	if err := os.MkdirAll(skillDir, 0755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(skillDir, "SKILL.md"), []byte("# frontend\n"), 0644); err != nil {
+		t.Fatal(err)
+	}
+
+	skills := DetectProjectSkills(workDir)
+	found := false
+	for _, s := range skills {
+		if s == "frontend-design" {
+			found = true
+			break
+		}
+	}
+	if !found {
+		t.Fatalf("expected frontend-design to be detected from ~/.codex, got %v", skills)
+	}
+}
+
 // --- ResolveSkillContent tests (CI-friendly with temp dirs) ---
 
 func TestResolveSkillContent_ValidSkill(t *testing.T) {
@@ -222,6 +254,35 @@ func TestResolveSkillContent_ValidSkill(t *testing.T) {
 	}
 	if strings.Contains(result, "name: test") {
 		t.Error("frontmatter was not stripped")
+	}
+}
+
+func TestResolveSkillContent_PrefersCodexOverClaude(t *testing.T) {
+	home := t.TempDir()
+	setTestHome(t, home)
+
+	codexDir := filepath.Join(home, ".codex", "skills", "dup-skill")
+	if err := os.MkdirAll(codexDir, 0755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(codexDir, "SKILL.md"), []byte("# Codex Version\nUse codex copy."), 0644); err != nil {
+		t.Fatal(err)
+	}
+
+	claudeDir := filepath.Join(home, ".claude", "skills", "dup-skill")
+	if err := os.MkdirAll(claudeDir, 0755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(claudeDir, "SKILL.md"), []byte("# Claude Version\nUse claude copy."), 0644); err != nil {
+		t.Fatal(err)
+	}
+
+	result := ResolveSkillContent([]string{"dup-skill"}, 0)
+	if !strings.Contains(result, "Use codex copy.") {
+		t.Fatalf("expected codex skill content, got %q", result)
+	}
+	if strings.Contains(result, "Use claude copy.") {
+		t.Fatalf("expected claude fallback to be ignored when codex exists, got %q", result)
 	}
 }
 

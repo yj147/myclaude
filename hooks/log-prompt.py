@@ -19,7 +19,7 @@ def get_session_id() -> str:
 
 def write_log(prompt: str) -> None:
     """Write prompt to session log file."""
-    log_dir = Path(".claude/state")
+    log_dir = Path(".codex/state")
     session_id = get_session_id()
     log_file = log_dir / f"session-{session_id}.log"
 

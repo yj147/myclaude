@@ -42,6 +42,7 @@ func ReadAgentPromptFile(path string, allowOutsideClaudeDir bool) (string, error
 	} else {
 		allowedDirs := []string{
 			filepath.Clean(filepath.Join(home, ".claude")),
+			filepath.Clean(filepath.Join(home, ".codex")),
 			filepath.Clean(filepath.Join(home, ".codeagent", "agents")),
 		}
 		for i := range allowedDirs {
@@ -77,7 +78,7 @@ func ReadAgentPromptFile(path string, allowOutsideClaudeDir bool) (string, error
 			}
 			if !withinAllowed {
 				logWarn(fmt.Sprintf("Refusing to read prompt file outside allowed dirs (%s): %s", strings.Join(allowedDirs, ", "), absPath))
-				return "", fmt.Errorf("prompt file must be under ~/.claude or ~/.codeagent/agents")
+				return "", fmt.Errorf("prompt file must be under ~/.claude, ~/.codex, or ~/.codeagent/agents")
 			}
 
 			resolvedPath, errPath := filepath.EvalSymlinks(absPath)
@@ -101,7 +102,7 @@ func ReadAgentPromptFile(path string, allowOutsideClaudeDir bool) (string, error
 					}
 					if !withinResolved {
 						logWarn(fmt.Sprintf("Refusing to read prompt file outside allowed dirs (%s) (resolved): %s", strings.Join(resolvedAllowed, ", "), resolvedPath))
-						return "", fmt.Errorf("prompt file must be under ~/.claude or ~/.codeagent/agents")
+						return "", fmt.Errorf("prompt file must be under ~/.claude, ~/.codex, or ~/.codeagent/agents")
 					}
 				}
 			}
@@ -142,8 +143,23 @@ var techSkillMap = []struct {
 	{Files: []string{"vue.config.js", "vite.config.ts", "nuxt.config.ts"}, Skills: []string{"vue-web-app"}},
 }
 
+func findSkillFile(home, skill string) string {
+	roots := []string{
+		filepath.Join(home, ".codex", "skills"),
+		filepath.Join(home, ".claude", "skills"),
+	}
+	for _, root := range roots {
+		path := filepath.Join(root, skill, "SKILL.md")
+		if _, err := os.Stat(path); err == nil {
+			return path
+		}
+	}
+	return ""
+}
+
 // DetectProjectSkills scans workDir for tech-stack fingerprints and returns
-// skill names that are both detected and installed at ~/.claude/skills/{name}/SKILL.md.
+// skill names that are both detected and installed (prefers ~/.codex/skills,
+// falls back to ~/.claude/skills).
 func DetectProjectSkills(workDir string) []string {
 	home, err := os.UserHomeDir()
 	if err != nil {
@@ -158,8 +174,7 @@ func DetectProjectSkills(workDir string) []string {
 					if seen[skill] {
 						continue
 					}
-					skillPath := filepath.Join(home, ".claude", "skills", skill, "SKILL.md")
-					if _, err := os.Stat(skillPath); err == nil {
+					if findSkillFile(home, skill) != "" {
 						detected = append(detected, skill)
 						seen[skill] = true
 					}
@@ -198,7 +213,11 @@ func ResolveSkillContent(skills []string, maxBudget int) string {
 			logWarn(fmt.Sprintf("skill %q: invalid name (must contain only [a-zA-Z0-9_-]), skipping", name))
 			continue
 		}
-		path := filepath.Join(home, ".claude", "skills", name, "SKILL.md")
+		path := findSkillFile(home, name)
+		if path == "" {
+			logWarn(fmt.Sprintf("skill %q: SKILL.md not found or empty, skipping", name))
+			continue
+		}
 		data, err := os.ReadFile(path)
 		if err != nil || len(data) == 0 {
 			logWarn(fmt.Sprintf("skill %q: SKILL.md not found or empty, skipping", name))

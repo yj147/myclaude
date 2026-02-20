@@ -21,7 +21,7 @@ const WRAPPER_REQUIRED_SKILLS = new Set(["dev"]);
 function parseArgs(argv) {
   const out = {
     command: "install",
-    installDir: "~/.claude",
+    installDir: "~/.codex",
     force: false,
     dryRun: false,
     list: false,
@@ -63,12 +63,12 @@ function printHelp() {
       "  npx github:stellarlinkco/myclaude",
       "  npx github:stellarlinkco/myclaude --list",
       "  npx github:stellarlinkco/myclaude --update",
-      "  npx github:stellarlinkco/myclaude --install-dir ~/.claude --force",
+      "  npx github:stellarlinkco/myclaude --install-dir ~/.codex --force",
       "  npx github:stellarlinkco/myclaude uninstall",
       "  npx github:stellarlinkco/myclaude uninstall --module bmad,do -y",
       "",
       "Options:",
-      "  --install-dir <path>   Default: ~/.claude",
+      "  --install-dir <path>   Default: ~/.codex",
       "  --force                Overwrite existing files",
       "  --dry-run              Print actions only",
       "  --list                 List installable items and exit",
