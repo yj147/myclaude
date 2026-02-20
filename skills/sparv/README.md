@@ -10,7 +10,7 @@ Completes "requirements → verifiable delivery" in one pass with external memor
 python install.py --module sparv
 ```
 
-Installs to `~/.claude/skills/sparv/`.
+Installs to `~/.codex/skills/sparv/`.
 
 ## Usage
 
@@ -97,14 +97,14 @@ During Vault phase, update `.sparv/kb.md`:
 
 For non-trivial changes:
 ```bash
-~/.claude/skills/sparv/scripts/changelog-update.sh --type <Added|Changed|Fixed|Removed> --desc "..."
+~/.codex/skills/sparv/scripts/changelog-update.sh --type <Added|Changed|Fixed|Removed> --desc "..."
 ```
 
 ## External Memory
 
 Initialize (run in project root):
 ```bash
-~/.claude/skills/sparv/scripts/init-session.sh --force
+~/.codex/skills/sparv/scripts/init-session.sh --force
 ```
 
 Creates:
@@ -156,10 +156,10 @@ Configured in `hooks/hooks.json`:
 
 ```bash
 # Record failure
-~/.claude/skills/sparv/scripts/failure-tracker.sh fail --note "short blocker"
+~/.codex/skills/sparv/scripts/failure-tracker.sh fail --note "short blocker"
 
 # Reset counter
-~/.claude/skills/sparv/scripts/failure-tracker.sh reset
+~/.codex/skills/sparv/scripts/failure-tracker.sh reset
 ```
 
 ## Uninstall

@@ -163,10 +163,10 @@ BMAD is an enterprise-grade agile development methodology that transforms your d
 
 ## 📁 Workflow Artifacts
 
-All documents are saved to `.claude/specs/{feature-name}/`:
+All documents are saved to `.codex/specs/{feature-name}/`:
 
 ```
-.claude/specs/e-commerce-checkout/
+.codex/specs/e-commerce-checkout/
 ├── 00-repository-context.md    # Repo analysis (auto)
 ├── 01-product-requirements.md  # PRD (PO, score ≥ 90)
 ├── 02-system-architecture.md   # Design (Architect, score ≥ 90)

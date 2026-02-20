@@ -19,5 +19,5 @@ npx github:cexll/myclaude
 Force overwrite / custom install directory:
 
 ```bash
-npx github:cexll/myclaude --install-dir ~/.claude --force
+npx github:cexll/myclaude --install-dir ~/.codex --force
 ```

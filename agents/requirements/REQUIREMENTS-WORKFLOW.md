@@ -99,10 +99,10 @@ Perfect for:
 
 ## 📁 Workflow Artifacts
 
-Generated in `.claude/requirements/{feature-name}/`:
+Generated in `.codex/requirements/{feature-name}/`:
 
 ```
-.claude/requirements/jwt-authentication/
+.codex/requirements/jwt-authentication/
 ├── 01-requirements.md        # Functional requirements (score ≥ 90)
 ├── 02-implementation.md      # Implementation summary
 ├── 03-review.md             # Code review report

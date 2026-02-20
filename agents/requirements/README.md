@@ -62,7 +62,7 @@ After code review passes (≥90%):
 ## Output Structure
 
 ```
-.claude/specs/{feature_name}/
+.codex/specs/{feature_name}/
 ├── 00-repository-context.md
 ├── requirements-confirm.md
 └── requirements-spec.md

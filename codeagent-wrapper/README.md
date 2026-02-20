@@ -223,7 +223,7 @@ When no skills are specified via `--skills`, codeagent-wrapper auto-detects the 
 | `package.json` | `vercel-react-best-practices`, `frontend-design` |
 | `vue.config.js` / `vite.config.ts` / `nuxt.config.ts` | `vue-web-app` |
 
-Skill specs are read from `~/.claude/skills/{name}/SKILL.md`, subject to a 16000-character budget.
+Skill specs are read from `~/.codex/skills/{name}/SKILL.md` first, then fallback to `~/.claude/skills/{name}/SKILL.md`, subject to a 16000-character budget.
 
 ## Supported Backends
 

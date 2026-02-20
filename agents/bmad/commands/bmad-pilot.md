@@ -72,8 +72,8 @@ Output: Comprehensive repository context report including:
 - Potential constraints or considerations
 
 Saving:
-1) Ensure directory ./.claude/specs/{feature_name}/ exists
-2) Save the scan summary to ./.claude/specs/{feature_name}/00-repo-scan.md
+1) Ensure directory ./.codex/specs/{feature_name}/ exists
+2) Save the scan summary to ./.codex/specs/{feature_name}/00-repo-scan.md
 3) Also return the context report content directly for immediate use"
 ```
 
@@ -104,7 +104,7 @@ Start this phase after repository scanning completes:
 ### 1. Input Validation & Feature Extraction
 - **Parse Options**: Extract any options (--skip-tests, --direct-dev, --skip-scan) from input
 - **Feature Name Generation**: Extract feature name from [$ARGUMENTS] using kebab-case format (lowercase, spaces/punctuation → hyphen, collapse repeats, trim)
-- **Directory Creation**: Ensure directory ./.claude/specs/{feature_name}/ exists before any saves (orchestration responsibility)
+- **Directory Creation**: Ensure directory ./.codex/specs/{feature_name}/ exists before any saves (orchestration responsibility)
 - **If input > 500 characters**: First summarize the core functionality and ask user to confirm
 - **If input is unclear**: Request more specific details before proceeding
 
@@ -115,7 +115,7 @@ Execute using Task tool with bmad-po agent:
 ```
 Project Requirements: [$ARGUMENTS]
 Repository Context: [Include repository scan results if available]
-Repository Scan Path: ./.claude/specs/{feature_name}/00-repo-scan.md
+Repository Scan Path: ./.codex/specs/{feature_name}/00-repo-scan.md
 Feature Name: {feature_name}
 
 Task: Analyze requirements and prepare initial PRD draft
@@ -164,8 +164,8 @@ Feature Name: {feature_name}
 Final PRD Content: [Include the final PRD content with quality score]
 
 Your task:
-1. Create directory ./.claude/specs/{feature_name}/ if it doesn't exist
-2. Save the PRD to ./.claude/specs/{feature_name}/01-product-requirements.md
+1. Create directory ./.codex/specs/{feature_name}/ if it doesn't exist
+2. Save the PRD to ./.codex/specs/{feature_name}/01-product-requirements.md
 3. Confirm successful save"
 ```
 
@@ -197,7 +197,7 @@ Execute using Task tool with bmad-architect agent:
 ```
 PRD Content: [Include PRD content from Phase 1]
 Repository Context: [Include repository scan results]
-Repository Scan Path: ./.claude/specs/{feature_name}/00-repo-scan.md
+Repository Scan Path: ./.codex/specs/{feature_name}/00-repo-scan.md
 Feature Name: {feature_name}
 
 Task: Analyze requirements and prepare initial architecture design
@@ -246,8 +246,8 @@ Feature Name: {feature_name}
 Final Architecture Content: [Include the final architecture content with quality score]
 
 Your task:
-1. Ensure directory ./.claude/specs/{feature_name}/ exists
-2. Save the architecture to ./.claude/specs/{feature_name}/02-system-architecture.md
+1. Ensure directory ./.codex/specs/{feature_name}/ exists
+2. Save the architecture to ./.codex/specs/{feature_name}/02-system-architecture.md
 3. Confirm successful save"
 ```
 
@@ -278,9 +278,9 @@ After achieving 90+ architecture quality score:
 Execute using Task tool with bmad-sm agent:
 ```
 Repository Context: [Include repository scan results]
-Repository Scan Path: ./.claude/specs/{feature_name}/00-repo-scan.md
-PRD Path: ./.claude/specs/{feature_name}/01-product-requirements.md
-Architecture Path: ./.claude/specs/{feature_name}/02-system-architecture.md
+Repository Scan Path: ./.codex/specs/{feature_name}/00-repo-scan.md
+PRD Path: ./.codex/specs/{feature_name}/01-product-requirements.md
+Architecture Path: ./.codex/specs/{feature_name}/02-system-architecture.md
 Feature Name: {feature_name}
 
 Task: Prepare an initial sprint plan draft.
@@ -325,8 +325,8 @@ Feature Name: {feature_name}
 Final Sprint Plan Content: [Include the final sprint plan content]
 
 Your task:
-1. Ensure directory ./.claude/specs/{feature_name}/ exists
-2. Save the sprint plan to ./.claude/specs/{feature_name}/03-sprint-plan.md
+1. Ensure directory ./.codex/specs/{feature_name}/ exists
+2. Save the sprint plan to ./.codex/specs/{feature_name}/03-sprint-plan.md
 3. Confirm successful save"
 ```
 
@@ -335,15 +335,15 @@ Your task:
 Use Task tool with bmad-dev agent:
 
 Repository Context: [Include repository scan results]
-Repository Scan Path: ./.claude/specs/{feature_name}/00-repo-scan.md
+Repository Scan Path: ./.codex/specs/{feature_name}/00-repo-scan.md
 Feature Name: {feature_name}
 Working Directory: [Project root]
 
 Task: Implement ALL features across ALL sprints according to specifications.
 Instructions:
-1. Read PRD from ./.claude/specs/{feature_name}/01-product-requirements.md
-2. Read Architecture from ./.claude/specs/{feature_name}/02-system-architecture.md
-3. Read Sprint Plan from ./.claude/specs/{feature_name}/03-sprint-plan.md
+1. Read PRD from ./.codex/specs/{feature_name}/01-product-requirements.md
+2. Read Architecture from ./.codex/specs/{feature_name}/02-system-architecture.md
+3. Read Sprint Plan from ./.codex/specs/{feature_name}/03-sprint-plan.md
 4. Identify and implement ALL sprints sequentially (Sprint 1, Sprint 2, etc.)
 5. Complete ALL tasks across ALL sprints before finishing
 6. Create production-ready code with tests for entire feature set
@@ -355,19 +355,19 @@ Instructions:
 Use Task tool with bmad-review agent:
 
 Repository Context: [Include repository scan results]
-Repository Scan Path: ./.claude/specs/{feature_name}/00-repo-scan.md
+Repository Scan Path: ./.codex/specs/{feature_name}/00-repo-scan.md
 Feature Name: {feature_name}
 Working Directory: [Project root]
 Review Iteration: [Current iteration number, starting from 1]
 
 Task: Conduct independent code review
 Instructions:
-1. Read PRD from ./.claude/specs/{feature_name}/01-product-requirements.md
-2. Read Architecture from ./.claude/specs/{feature_name}/02-system-architecture.md
-3. Read Sprint Plan from ./.claude/specs/{feature_name}/03-sprint-plan.md
+1. Read PRD from ./.codex/specs/{feature_name}/01-product-requirements.md
+2. Read Architecture from ./.codex/specs/{feature_name}/02-system-architecture.md
+3. Read Sprint Plan from ./.codex/specs/{feature_name}/03-sprint-plan.md
 4. Analyze implementation against requirements and architecture
 5. Generate structured review report
-6. Save report to ./.claude/specs/{feature_name}/04-dev-reviewed.md
+6. Save report to ./.codex/specs/{feature_name}/04-dev-reviewed.md
 7. Return review status (Pass/Pass with Risk/Fail)
 ```
 
@@ -376,15 +376,15 @@ Instructions:
 Use Task tool with bmad-qa agent:
 
 Repository Context: [Include test patterns from scan]
-Repository Scan Path: ./.claude/specs/{feature_name}/00-repo-scan.md
+Repository Scan Path: ./.codex/specs/{feature_name}/00-repo-scan.md
 Feature Name: {feature_name}
 Working Directory: [Project root]
 
 Task: Create and execute comprehensive test suite.
 Instructions:
-1. Read PRD from ./.claude/specs/{feature_name}/01-product-requirements.md
-2. Read Architecture from ./.claude/specs/{feature_name}/02-system-architecture.md
-3. Read Sprint Plan from ./.claude/specs/{feature_name}/03-sprint-plan.md
+1. Read PRD from ./.codex/specs/{feature_name}/01-product-requirements.md
+2. Read Architecture from ./.codex/specs/{feature_name}/02-system-architecture.md
+3. Read Sprint Plan from ./.codex/specs/{feature_name}/03-sprint-plan.md
 4. Review implemented code from Phase 4
 5. Create comprehensive test suite validating all acceptance criteria
 6. Execute tests and report results
@@ -414,7 +414,7 @@ Instructions:
 
 ## Output Structure
 
-All outputs saved to `./.claude/specs/{feature_name}/`:
+All outputs saved to `./.codex/specs/{feature_name}/`:
 ```
 00-repo-scan.md             # Repository scan summary (saved automatically after scan)
 01-product-requirements.md    # PRD from PO (after approval)

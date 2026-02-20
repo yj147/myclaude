@@ -1,13 +1,13 @@
 ---
 name: skill-install
-description: Install Claude skills from GitHub repositories with automated security scanning. Triggers when users want to install skills from a GitHub URL, need to browse available skills in a repository, or want to safely add new skills to their Claude environment.
+description: Install Codex skills from GitHub repositories with automated security scanning. Triggers when users want to install skills from a GitHub URL, need to browse available skills in a repository, or want to safely add new skills to their Codex environment.
 ---
 
 # Skill Install
 
 ## Overview
 
-Install Claude skills from GitHub repositories with built-in security scanning to protect against malicious code, backdoors, and vulnerabilities.
+Install Codex skills from GitHub repositories with built-in security scanning to protect against malicious code, backdoors, and vulnerabilities.
 
 ## When to Use
 
@@ -15,7 +15,7 @@ Trigger this skill when the user:
 - Provides a GitHub repository URL and wants to install skills
 - Asks to "install skills from GitHub"
 - Wants to browse and select skills from a repository
-- Needs to add new skills to their Claude environment
+- Needs to add new skills to their Codex environment
 
 ## Workflow
 
@@ -115,9 +115,9 @@ Based on the security scan results:
 
 ### Step 7: Install Skills
 
-For approved skills, install to `~/.claude/skills/`:
+For approved skills, install to `~/.codex/skills/`:
 
-1. Create the skill directory: `~/.claude/skills/{skill_name}/`
+1. Create the skill directory: `~/.codex/skills/{skill_name}/`
 2. Write all skill files maintaining the directory structure
 3. Ensure proper file permissions (executable for scripts)
 4. Verify SKILL.md exists and has valid frontmatter
@@ -129,8 +129,8 @@ Use the Write tool to create files.
 After installation, provide a summary:
 - List of successfully installed skills
 - List of skipped skills (if any) with reasons
-- Location: `~/.claude/skills/`
-- Next steps: "The skills are now available. Restart Claude or use them directly."
+- Location: `~/.codex/skills/`
+- Next steps: "The skills are now available. Restart Codex or use them directly."
 
 ## Example Usage
 
@@ -143,7 +143,7 @@ After installation, provide a summary:
 4. Performs security scan on each skill
 5. skill-a: SAFE - proceeds to install
 6. skill-b: WARNING (makes HTTP request) - asks user for confirmation
-7. Installs approved skills to ~/.claude/skills/
+7. Installs approved skills to ~/.codex/skills/
 8. Confirms: "Successfully installed: skill-a, skill-b"
 
 ## Security Notes
@@ -152,7 +152,7 @@ After installation, provide a summary:
 - **Be conservative** - When in doubt, flag as WARNING and let user decide
 - **Critical issues are blocking** - CRITICAL severity findings cannot be overridden
 - **Transparency** - Always show users what was found during security scans
-- **Sandboxing** - Remind users that skills run with Claude's permissions
+- **Sandboxing** - Remind users that skills run with Codex permissions
 
 ## Resources
 

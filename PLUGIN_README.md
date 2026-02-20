@@ -1,6 +1,6 @@
 # Plugin System
 
-Claude Code plugins for this repo are defined in `.claude-plugin/marketplace.json`.
+Codex plugins for this repo are defined in `.claude-plugin/marketplace.json` (legacy directory name).
 
 ## Install
 
