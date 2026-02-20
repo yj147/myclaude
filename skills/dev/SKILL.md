@@ -159,7 +159,7 @@ These rules have HIGHEST PRIORITY and override all other instructions:
     dependencies: [optional, comma-separated ids]
     ---CONTENT---
     Task: [task-id-1]
-    Reference: @.claude/specs/{feature_name}/dev-plan.md
+    Reference: @.codex/specs/{feature_name}/dev-plan.md
     Scope: [task file scope]
     Test: [test command]
     Deliverables: code + unit tests + coverage ≥90% + coverage summary
@@ -171,7 +171,7 @@ These rules have HIGHEST PRIORITY and override all other instructions:
     dependencies: [optional, comma-separated ids]
     ---CONTENT---
     Task: [task-id-2]
-    Reference: @.claude/specs/{feature_name}/dev-plan.md
+    Reference: @.codex/specs/{feature_name}/dev-plan.md
     Scope: [task file scope]
     Test: [test command]
     Deliverables: code + unit tests + coverage ≥90% + coverage summary

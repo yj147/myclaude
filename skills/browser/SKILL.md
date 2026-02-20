@@ -12,7 +12,7 @@ Minimal Chrome DevTools Protocol (CDP) helpers for browser automation without MC
 Install dependencies before first use:
 
 ```bash
-npm install --prefix ~/.claude/skills/browser/browser ws
+npm install --prefix ~/.codex/skills/browser/browser ws
 ```
 
 ## Scripts

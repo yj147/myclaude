@@ -19,5 +19,5 @@ npx github:stellarlinkco/myclaude
 Force overwrite / custom install directory:
 
 ```bash
-npx github:stellarlinkco/myclaude --install-dir ~/.claude --force
+npx github:stellarlinkco/myclaude --install-dir ~/.codex --force
 ```

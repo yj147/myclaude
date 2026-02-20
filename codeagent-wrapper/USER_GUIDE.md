@@ -19,7 +19,7 @@ npx github:stellarlinkco/myclaude
 
 # Manual build (optional; requires repo checkout)
 cd codeagent-wrapper
-go build -o ~/.claude/bin/codeagent-wrapper
+go build -o ~/.codex/bin/codeagent-wrapper
 ```
 
 ## Quick Start
@@ -376,15 +376,15 @@ codeagent-wrapper resume <session_id> "continue task"
 # Check dependencies reference existing task IDs
 ```
 
-## Integration with Claude Code
+## Integration with Codex
 
 Use via the `codeagent` skill:
 
 ```bash
-# In Claude Code conversation
+# In Codex conversation
 User: Use codeagent to implement authentication
 
-# Claude will execute:
+# Codex will execute:
 codeagent-wrapper --backend codex - <<'EOF'
 implement JWT authentication in @src/auth
 EOF

@@ -56,7 +56,7 @@ Two mandatory stop points require explicit user approval:
 ## Output Structure
 
 ```
-.claude/specs/{feature_name}/
+.codex/specs/{feature_name}/
 ├── 00-repo-scan.md
 ├── 01-product-requirements.md
 ├── 02-system-architecture.md

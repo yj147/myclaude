@@ -1,10 +1,9 @@
 [中文](README_CN.md) [English](README.md)
 
-# Claude Code Multi-Agent Workflow System
+# Codex Multi-Agent Workflow System
 
 [![Run in Smithery](https://smithery.ai/badge/skills/stellarlinkco)](https://smithery.ai/skills?ns=stellarlinkco&utm_source=github&utm_medium=badge)
 [![License: AGPL-3.0](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
-[![Claude Code](https://img.shields.io/badge/Claude-Code-blue)](https://claude.ai/code)
 [![Version](https://img.shields.io/badge/Version-6.x-green)](https://github.com/stellarlinkco/myclaude)
 
 > AI-powered development automation with multi-backend execution (Codex/Claude/Gemini/OpenCode)
@@ -57,10 +56,10 @@ npx github:stellarlinkco/myclaude --list
 npx github:stellarlinkco/myclaude --update
 
 # Custom install directory / overwrite
-npx github:stellarlinkco/myclaude --install-dir ~/.claude --force
+npx github:stellarlinkco/myclaude --install-dir ~/.codex --force
 ```
 
-`--update` detects already installed modules in the target install dir (defaults to `~/.claude`, via `installed_modules.json` when present) and updates them from GitHub (latest release) by overwriting the module files.
+`--update` detects already installed modules in the target install dir (defaults to `~/.codex`, via `installed_modules.json` when present) and updates them from GitHub (latest release) by overwriting the module files.
 
 ### Module Configuration
 
@@ -94,7 +93,7 @@ Edit `config.json` to enable/disable modules:
 
 | Role | Agent | Responsibility |
 |------|-------|----------------|
-| **Orchestrator** | Claude Code | Planning, context gathering, verification |
+| **Orchestrator** | Codex | Planning, context gathering, verification |
 | **Executor** | codeagent-wrapper | Code editing, test execution (Codex/Claude/Gemini/OpenCode) |
 
 ## Backend CLI Requirements
@@ -109,7 +108,7 @@ Edit `config.json` to enable/disable modules:
 ## Directory Structure After Installation
 
 ```
-~/.claude/
+~/.codex/
 ├── bin/codeagent-wrapper
 ├── CLAUDE.md              (installed by default)
 ├── commands/              (from essentials module)
@@ -137,7 +136,7 @@ npx github:stellarlinkco/myclaude
 
 **Module not loading:**
 ```bash
-cat ~/.claude/installed_modules.json
+cat ~/.codex/installed_modules.json
 npx github:stellarlinkco/myclaude --force
 ```
 

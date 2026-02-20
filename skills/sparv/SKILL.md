@@ -64,7 +64,7 @@ During Vault phase, update `.sparv/kb.md`:
 
 Use during Review or Vault phase for non-trivial changes:
 ```bash
-~/.claude/skills/sparv/scripts/changelog-update.sh --type <Added|Changed|Fixed|Removed> --desc "..."
+~/.codex/skills/sparv/scripts/changelog-update.sh --type <Added|Changed|Fixed|Removed> --desc "..."
 ```
 
 ## External Memory (Two Files)
@@ -72,7 +72,7 @@ Use during Review or Vault phase for non-trivial changes:
 Initialize (run in project root):
 
 ```bash
-~/.claude/skills/sparv/scripts/init-session.sh --force
+~/.codex/skills/sparv/scripts/init-session.sh --force
 ```
 
 File conventions:
@@ -106,8 +106,8 @@ Each item scores 0/1/2, total 0-10:
 - Failure counting (3-Failure Protocol):
 
 ```bash
-~/.claude/skills/sparv/scripts/failure-tracker.sh fail --note "short blocker"
-~/.claude/skills/sparv/scripts/failure-tracker.sh reset
+~/.codex/skills/sparv/scripts/failure-tracker.sh fail --note "short blocker"
+~/.codex/skills/sparv/scripts/failure-tracker.sh reset
 ```
 
 ## Phase 4: Review
@@ -118,7 +118,7 @@ Each item scores 0/1/2, total 0-10:
 Run 3-question reboot test before session ends:
 
 ```bash
-~/.claude/skills/sparv/scripts/reboot-test.sh --strict
+~/.codex/skills/sparv/scripts/reboot-test.sh --strict
 ```
 
 ## Phase 5: Vault
@@ -126,7 +126,7 @@ Run 3-question reboot test before session ends:
 Archive current session:
 
 ```bash
-~/.claude/skills/sparv/scripts/archive-session.sh
+~/.codex/skills/sparv/scripts/archive-session.sh
 ```
 
 ## Script Tools

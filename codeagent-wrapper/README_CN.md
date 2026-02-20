@@ -223,7 +223,7 @@ skip-permissions: false
 | `package.json` | `vercel-react-best-practices`, `frontend-design` |
 | `vue.config.js` / `vite.config.ts` / `nuxt.config.ts` | `vue-web-app` |
 
-技能规范从 `~/.claude/skills/{name}/SKILL.md` 读取，受 16000 字符预算限制。
+技能规范优先从 `~/.codex/skills/{name}/SKILL.md` 读取，其次回退到 `~/.claude/skills/{name}/SKILL.md`，受 16000 字符预算限制。
 
 ## 支持的后端
 

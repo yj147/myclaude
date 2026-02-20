@@ -1,7 +1,6 @@
-# Claude Code 多智能体工作流系统
+# Codex 多智能体工作流系统
 
 [![License: AGPL-3.0](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
-[![Claude Code](https://img.shields.io/badge/Claude-Code-blue)](https://claude.ai/code)
 [![Version](https://img.shields.io/badge/Version-6.x-green)](https://github.com/stellarlinkco/myclaude)
 
 > AI 驱动的开发自动化 - 多后端执行架构 (Codex/Claude/Gemini/OpenCode)
@@ -45,7 +44,7 @@ npx github:stellarlinkco/myclaude
 
 | 角色 | 智能体 | 职责 |
 |------|-------|------|
-| **编排者** | Claude Code | 规划、上下文收集、验证 |
+| **编排者** | Codex | 规划、上下文收集、验证 |
 | **执行者** | codeagent-wrapper | 代码编辑、测试执行（Codex/Claude/Gemini/OpenCode 后端）|
 
 ## 工作流详解
@@ -197,10 +196,10 @@ npx github:stellarlinkco/myclaude --list
 npx github:stellarlinkco/myclaude --update
 
 # 指定安装目录 / 强制覆盖
-npx github:stellarlinkco/myclaude --install-dir ~/.claude --force
+npx github:stellarlinkco/myclaude --install-dir ~/.codex --force
 ```
 
-`--update` 会在目标安装目录（默认 `~/.claude`，优先读取 `installed_modules.json`）检测已安装 modules，并从 GitHub 拉取最新发布版本覆盖更新。
+`--update` 会在目标安装目录（默认 `~/.codex`，优先读取 `installed_modules.json`）检测已安装 modules，并从 GitHub 拉取最新发布版本覆盖更新。
 
 ### 模块配置
 
@@ -249,7 +248,7 @@ npx github:stellarlinkco/myclaude
 
 **模块未加载：**
 ```bash
-cat ~/.claude/installed_modules.json
+cat ~/.codex/installed_modules.json
 npx github:stellarlinkco/myclaude --force
 ```
 
