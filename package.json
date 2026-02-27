@@ -1,6 +1,6 @@
 {
   "name": "myclaude",
-  "version": "6.7.0",
+  "version": "6.7.5",
   "private": true,
   "description": "Codex multi-agent workflows (npx installer)",
   "license": "AGPL-3.0",
